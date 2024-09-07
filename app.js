@@ -3,6 +3,7 @@
 import express from "express";
 import connect from "./schemas/index.js";
 import TodosRouter from "./routes/todos.router.js";
+import errorHandlerMiddleware from "./middlewares/error-handler.middleware.js";
 
 const app = express();
 const PORT = 3000;
@@ -24,6 +25,9 @@ router.get("/", (req, res) => {
 
 // /api 주소로 접근하였을 때, router와 TodosRouter로 클라이언트의 요청이 전달됩니다.
 app.use("/api", [router, TodosRouter]);
+
+//에러 처리 미들웨어 등록
+app.use(errorHandlerMiddleware);
 
 app.listen(PORT, () => {
   console.log(PORT, "포트로 서버가 열렸어요!");
